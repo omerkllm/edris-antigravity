@@ -146,3 +146,32 @@ Asked the agent to handle environment setup autonomously.
 Proceeded with Phase 6 (US4: Graceful Degradation) only. Configured and used the project venv at `d:/edris-antigravity/.venv`, installed backend dependencies, and validated fallback behavior through tests and a live in-process endpoint call.
 Confirmed `tests/unit/test_fallbacks.py` passes (3/3). Confirmed `/api/analyze` returns HTTP 200 with fallback output when `GEMINI_API_KEY=invalid`, with classifier/extractor/checklist warnings logged and no crash.
 [DECISION] Enforced strict fallback integrity in checklist generation: malformed/partial checklist AI responses now trigger full deterministic fallback for all opportunities to avoid silent data loss.
+
+---
+
+### 2026-04-18T16:01:11.6290085+05:00 USER
+Requested branch consolidation: merge all branches into one and call it `main`.
+
+---
+
+### 2026-04-18T16:01:11.6290085+05:00 AGENT
+Merged local `001-ai-opportunity-ranker` into `master`, renamed the consolidated branch to `main`, pushed `main` to origin with upstream tracking, and deleted local/remote `001-ai-opportunity-ranker`.
+Attempted to delete `origin/master`, but GitHub rejected deletion because `master` is still configured as the remote repository's current/default branch.
+[DECISION] Consolidation is complete on `main`; final cleanup requires switching default branch to `main` in GitHub settings before deleting `master`.
+
+---
+
+### 2026-04-18T16:02:04.9290199+05:00 AGENT
+Updated local remote HEAD reference to `origin/main` via `git remote set-head origin main` for correct local default tracking. Remote branches currently visible: `origin/main` and `origin/master`.
+
+---
+
+### 2026-04-18T16:06:05.0656639+05:00 USER
+Reported concern that an env file appears in the repository and may be insecure.
+
+---
+
+### 2026-04-18T16:06:05.0656639+05:00 AGENT
+Audited tracked files and history for env exposure. Confirmed only `backend/.env.example` is tracked on both `origin/main` and `origin/master`, with `GEMINI_API_KEY` blank and no real secret values committed.
+Verified `.gitignore` already blocks `.env`, `backend/.env`, `frontend/.env`, and `.env.*` files while allowing only `.env.example` templates.
+[DECISION] Current repository state is secure with respect to env files; no code change required unless user wants to remove template visibility.
