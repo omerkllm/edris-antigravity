@@ -175,3 +175,15 @@ Reported concern that an env file appears in the repository and may be insecure.
 Audited tracked files and history for env exposure. Confirmed only `backend/.env.example` is tracked on both `origin/main` and `origin/master`, with `GEMINI_API_KEY` blank and no real secret values committed.
 Verified `.gitignore` already blocks `.env`, `backend/.env`, `frontend/.env`, and `.env.*` files while allowing only `.env.example` templates.
 [DECISION] Current repository state is secure with respect to env files; no code change required unless user wants to remove template visibility.
+
+---
+
+### 2026-04-18T16:12:22.4389529+05:00 USER
+Requested that the current files become the final state on the only branch, with no branches other than `main`.
+
+---
+
+### 2026-04-18T16:12:22.4389529+05:00 AGENT
+Committed and pushed current working-tree changes to `main` (`e5c01ef`). Local repository now has only `main`.
+Attempted to delete `origin/master`, but GitHub rejected deletion because the remote default/HEAD branch remains `master`. Verified remote state still shows branches `main` and `master`, with `HEAD branch: master`.
+[DECISION] Automatic full branch consolidation is blocked by remote default-branch settings; deleting `master` requires changing repository default branch to `main` first.
